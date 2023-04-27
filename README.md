@@ -1,2 +1,2 @@
 # DataScience_Jefferson
-a selection of Data Science Project
+a small selection of Data Science Projects

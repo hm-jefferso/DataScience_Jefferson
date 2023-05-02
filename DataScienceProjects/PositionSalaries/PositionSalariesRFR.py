@@ -25,7 +25,7 @@ rfr.fit(X, y)
 
 #predicting singular result
 example = rfr.predict([[5.5]])
-print(f'at 5.5 the estameted salary is: {example}')
+print(f'at 5.5 the estimated salary is: {example}')
 
 #predicting test set results
 y_pred = rfr.predict(X_test)

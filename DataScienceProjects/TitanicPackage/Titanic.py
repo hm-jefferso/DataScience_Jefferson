@@ -6,7 +6,7 @@ train_data = pd.read_csv("/Users/anthonyjefferson/Downloads/titanic/train.csv")
 
 #First 5 rows of Test data
 test_data = pd.read_csv("/Users/anthonyjefferson/Downloads/titanic/test.csv")
-#print (test_data.head())
+print (test_data.head())
 
 #Survival Rate Women
 women = train_data.loc [train_data.Sex == 'female']["Survived"]
@@ -17,8 +17,6 @@ print(f"Percentage of Women who survived Titanic: {rate_women}")
 men = train_data.loc[train_data.Sex == "male"]["Survived"]
 rate_men = sum(men) / len(men)
 print(f"Percentage of Men who survived Titanic: {rate_men}")
-
-from sklearn.ensemble import RandomForestClassifier
 
 #looking at all people that survived
 y = train_data["Survived"]
@@ -31,6 +29,7 @@ X = pd.get_dummies(train_data[features])
 X_test = pd.get_dummies(test_data[features])
 
 #RF Algorithm
+from sklearn.ensemble import RandomForestClassifier
 rfc = RandomForestClassifier(n_estimators=100,max_depth=5, random_state=1)
 rfc.fit(X, y)
 

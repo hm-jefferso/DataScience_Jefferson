@@ -1,39 +1,44 @@
-#TODO: The goal of this code is to use Machine
-# Learning in order to predict, what Feature X a
-# Sweet needs in order to be successfull (see dataset)
-
-#importing neccessary libraries
-import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
+import itertools
 
-#reading csv candy-data
-dataset = pd.read_csv('/Users/anthonyjefferson/Desktop/'
-                      'Bewerbung/Case Study/candy-data.csv')
+# reading csv candy-data
+dataset = pd.read_csv(
+    '/Users/anthonyjefferson/Desktop/'
+    'Bewerbung/Case Study/candy-data.csv')
 
-#Features X include all Rows,
+# Features X include all Rows
 X = dataset.iloc[:, 1:-3].values
 y = dataset.iloc[:, -1].values
 
-#importing RandomForestClassifier
+# importing RandomForestRegressor
 from sklearn.ensemble import RandomForestRegressor
-regressor = RandomForestRegressor(n_estimators = 10, random_state = 0)
+
+regressor = RandomForestRegressor(n_estimators=10, random_state=0)
 regressor.fit(X, y)
 
+# Generate all possible scenarios
+scenarios = list(
+    itertools.product(
+        [0, 1],
+        repeat=len(
+            X[0])))
 
-# Predict for a single scenario
-single_scenario = [[1, 0, 0, 0, 0, 1, 0, 1, 1]]
-prediction = regressor.predict(single_scenario)
-print(f"Prediction for the single scenario: {prediction}")
+#Initialize variables for highest and lowest predictions
+highest_prediction = float('-inf')
+lowest_prediction = float('inf')
 
-#TODO: Currently Predicting winpercent for single scenario
-#TODO: Task is to create Scenarios for all 9 Features X,
-#TODO: preferrably by using for loop
+# Iterate over each scenario and make predictions
+for scenario in scenarios:
+    single_scenario = [list(scenario)]
+    prediction = regressor.predict(single_scenario)
+    print(f"Scenario: {single_scenario}, Prediction: {prediction}")
 
-# Predict for multiple scenarios
-scenarios = [[scenario_1_features], [scenario_2_features], ...]
+    # Update highest and lowest predictions
+    if prediction > highest_prediction:
+        highest_prediction = prediction
 
-#loop trough all 9 features to get min and max for new sweet
-for i, scenario in enumerate(scenarios):
-    prediction = regressor.predict(scenario)
-    print(f"Prediction for scenario {i+1}: {prediction}")
+    if prediction < lowest_prediction:
+        lowest_prediction = prediction
+
+print(f'Highest: {highest_prediction}')
+print(f'Lowest: {lowest_prediction}')

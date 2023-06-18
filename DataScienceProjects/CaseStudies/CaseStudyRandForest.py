@@ -1,10 +1,9 @@
 import pandas as pd
 import itertools
+import csv
 
 # reading csv candy-data
-dataset = pd.read_csv(
-    '/Users/anthonyjefferson/Desktop/'
-    'Bewerbung/Case Study/candy-data.csv')
+dataset = pd.read_csv('/Users/anthonyjefferson/Desktop/''Bewerbung/Case Study/candy-data.csv')
 
 # Features X include all Rows
 X = dataset.iloc[:, 1:-3].values
@@ -17,11 +16,7 @@ regressor = RandomForestRegressor(n_estimators=10, random_state=0)
 regressor.fit(X, y)
 
 # Generate all possible scenarios
-scenarios = list(
-    itertools.product(
-        [0, 1],
-        repeat=len(
-            X[0])))
+scenarios = list(itertools.product([0, 1],repeat=len(X[0])))
 
 #Initialize variables for highest and lowest predictions
 highest_prediction = float('-inf')
@@ -42,3 +37,4 @@ for scenario in scenarios:
 
 print(f'Highest: {highest_prediction}')
 print(f'Lowest: {lowest_prediction}')
+
